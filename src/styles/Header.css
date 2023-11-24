@@ -1,0 +1,23 @@
+#header {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #f7b519;
+    box-shadow: 0 1px 10px black;
+}
+
+#header > svg {
+    color: white;
+}
+
+.title {
+    font-weight: bold;
+    margin: 1.3rem;
+    font-size: 35px;
+    color: white;
+    text-shadow: -2px 2px 0 #000, 
+                          1px 1px 0 #000, 
+                         1px -1px 0 #000, 
+                        -1px -1px 0 #000;
+}
