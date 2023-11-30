@@ -2,6 +2,16 @@ import React from "react";
 import "./styles/SearchForm.css";
 
 function SearchForm(props) {
+    const gatherDataAndFilter = () => {
+        const formData = {
+            "title": document.getElementById("title-input").value.toLowerCase(),
+            "yearFrom": Number.parseInt(document.getElementById("year-from-input").value),
+            "yearTo": Number.parseInt(document.getElementById("year-to-input").value),
+            "casting": document.getElementById("casting-input").value
+        };
+        console.log(formData);
+        props.filterMovies(formData);
+    };
     return (
         <div id="search-form">
             <h1>Wyszukaj film</h1>
@@ -23,7 +33,7 @@ function SearchForm(props) {
                     <input id="casting-input" type="text" placeholder="Podaj imię i nazwisko"/>
                 </div>
                 <div className="button-input">
-                    <button id="submit-search" onClick={props.filterMovies}>Wyszukaj</button>
+                    <button id="submit-search" onClick={gatherDataAndFilter}>Wyszukaj</button>
                 </div>
             </div>
         </div>

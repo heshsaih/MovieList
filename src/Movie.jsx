@@ -7,8 +7,8 @@ function Movie({data}) {
             <h2>{data.title}</h2>
             <ul>
                 <li>Rok wydania: <span>{data.year}</span></li>
-                <li>Obsada: <span>{data.cast}</span></li>
-                <li>Gatunki: <span>{data.genres}</span></li>
+                <li>Obsada: <span>{data.cast.join(", ")}</span></li>
+                <li>Gatunki: <span>{data.genres.join(", ")}</span></li>
             </ul>
             <p>{data.extract}</p>
         </div>

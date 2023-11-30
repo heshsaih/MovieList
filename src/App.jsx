@@ -4,23 +4,45 @@ import Header from "./Header";
 import SearchForm from './SearchForm';
 import List from './List';
 import Footer from "./Footer";
+import readMovies from "./data/movies.json";
+import * as Underscore from "underscore";
+
+readMovies = Underscore.shuffle(readMovies);
 
 function App() {
-    const [displayedMovies, setDisplayedMovies] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const [displayedMovies, setDisplayedMovies] = useState(Underscore.range(10));
     const [movieCount, setMovieCount] = useState(10);
-    const [movieTitle, setMovieTitle] = useState("kaktus");
     const addMovies = () => {
         setMovieCount(movieCount + 10);
-        setDisplayedMovies([...Array(movieCount + 10).keys()]);
+        setDisplayedMovies(Underscore.range(movieCount + 10));
     };
-    const filterMovies = () => {
-        console.log(movieTitle); 
+    const filterMovies = (formData) => {
+        let filteredMovies = Underscore.range(movieCount);
+        if (formData.title !== "") {
+            filteredMovies = Underscore.filter(filteredMovies, (index) => {
+                const movie = readMovies[index];
+                return movie.title.toLowerCase().includes(formData.title.toLowerCase());
+            });
+        }
+        if (!Number.isNaN(formData.yearFrom)) {
+            filteredMovies = Underscore.filter(filteredMovies, (index) => {
+                const movie = readMovies[index];
+                return movie.year >= formData.yearFrom;
+            });
+        }
+        if (!Number.isNaN(formData.yearTo)) {
+            filteredMovies = Underscore.filter(filteredMovies, (index) => {
+                const movie = readMovies[index];
+                return movie.year <= formData.yearTo;
+            });
+        }
+        setDisplayedMovies(filteredMovies);
     };
     return (
         <div>
             <Header></Header>
-            <SearchForm filterMovies={filterMovies} movieTitle={movieTitle} setMovieTitle={setMovieTitle}></SearchForm>
-            <List displayedMovies={displayedMovies} addMovies={addMovies}></List>
+            <SearchForm filterMovies={filterMovies}></SearchForm>
+            <List displayedMovies={displayedMovies} addMovies={addMovies} readMovies={readMovies}></List>
             <Footer></Footer>
         </div>
     );
