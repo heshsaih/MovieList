@@ -10,7 +10,7 @@ function SearchForm(props) {
             "casting": document.getElementById("casting-input").value
         };
         console.log(formData);
-        props.filterMovies(formData);
+        props.updateGlobalFormData(formData);
     };
     return (
         <div id="search-form">

@@ -6,7 +6,7 @@ function List(props) {
     return (
         <div id="list">
             <div id="list-heading">
-                <h1>Lista filmów</h1>
+                <h1>Lista filmów - aktualnie wyświetlane {props.displayedMovies.length}</h1>
             </div>
             <div id="movies">
                 {props.displayedMovies.map((x, _i) => {

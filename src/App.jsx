@@ -14,6 +14,15 @@ function App() {
     const [displayedMovies, setDisplayedMovies] = useState(Underscore.range(10));
     const [movieCount, setMovieCount] = useState(10);
     const [moviesByGenres, setMoviesByGenres] = useState([]);
+    const [formData, setFormData] = useState({
+        "title": "",
+        "yearFrom": NaN,
+        "yearTo": NaN,
+        "casting": ""
+    });
+    const updateGlobalFormData = (newData) => {
+        setFormData(newData);
+    };
     const addMovies = () => {
         setMovieCount(movieCount + 10);
         setDisplayedMovies(Underscore.range(movieCount + 10));
@@ -75,10 +84,12 @@ function App() {
         console.log(groupedMovies);
     };
     useEffect(() => groupMoviesByGenres(), [displayedMovies]);
+    useEffect(() => filterMovies(formData), [movieCount]);
+    useEffect(() => filterMovies(formData), [formData]);
     return (
         <div>
             <Header></Header>
-            <SearchForm filterMovies={filterMovies}></SearchForm>
+            <SearchForm filterMovies={filterMovies} updateGlobalFormData={updateGlobalFormData}></SearchForm>
             <List displayedMovies={displayedMovies} addMovies={addMovies} readMovies={readMovies}></List>
             <Genres moviesByGenres={moviesByGenres} readMovies={readMovies}></Genres>
             <Footer></Footer>
