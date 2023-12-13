@@ -74,20 +74,27 @@ function App() {
         });
         const groupedMovies = [];
         genres.forEach(genre => {
-            const movies = [];
+            let movies = [];
             displayedMovies.forEach(index => {
                 const movie = readMovies[index];
+                movie.id = index;
                 if (movie.genres.join().toLowerCase().includes(genre.toLowerCase())) {
                     movies.push(index);
                 }
             });
+            let temp = []
+            movies.forEach(index => temp.push({
+                id: index,
+                title: readMovies[index].title
+            }));
+            movies = Underscore.chain(temp).sortBy((obj) => obj.title).pluck("id").value();
             groupedMovies.push({
                 "genre": genre,
-                "movies": movies.sort()
+                "movies": movies
             });
+            
         });
         setMoviesByGenres(Underscore.sortBy(groupedMovies, (element) => element.genre));
-        console.log(groupedMovies);
     };
 
     const groupMoviesByCasting = () => {
@@ -102,20 +109,25 @@ function App() {
         });
         const groupedMovies = [];
         casting.forEach(actor => {
-            const movies = [];
+            let movies = [];
             displayedMovies.forEach(index => {
                 const movie = readMovies[index];
                 if (movie.cast.join().toLowerCase().includes(actor.toLowerCase())) {
                     movies.push(index);
                 }
             });
+            let temp = []
+            movies.forEach(index => temp.push({
+                id: index,
+                title: readMovies[index].title
+            }));
+            movies = Underscore.chain(temp).sortBy((obj) => obj.title).pluck("id").value();
             groupedMovies.push({
                 "casting": actor,
                 "movies": movies.sort()
             });
         });
         setMoviesByCasting(Underscore.sortBy(groupedMovies, (element) => element.casting));
-        console.log(groupedMovies);
     };
 
     useEffect(() => groupMoviesByGenres(), [displayedMovies]);
